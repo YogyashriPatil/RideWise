@@ -63,14 +63,14 @@ export default function NeonWaveBackground() {
     return () => window.removeEventListener("resize", resize);
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 0,
-      }}
-    />
-  );
+  return <div className="opacity-80">
+        <canvas
+        ref={canvasRef}
+        style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 0,
+        }}
+        />
+   </div>
 }
