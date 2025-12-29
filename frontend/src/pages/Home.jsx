@@ -10,12 +10,14 @@ export default function Home(){
             zIndex: 9999,
             color: "white"
         }}>
-            {/* <Logo /> */}
+            <Logo />
         </div>
-        <div className="flex gap-3">
+        <div className="fixed md:pt-20 top-6 md:left-200 z-20 flex gap-4 text-white">
             <Navbar text="Day Prediction" />
-            {/* <Navbar text="Hour Prediction" /> */}
-
+            <Navbar text="Hour Prediction" />
+            <Navbar text="History" />
+            <Navbar text="Profile" />
+            <Navbar text="Review" />
         </div>
     </div>
 }
