@@ -122,53 +122,7 @@ export default function RideWiseBackground() {
 
       {/* Main content area */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-8 text-center">
-        <div className="mb-8 relative">
-          <Zap className="w-20 h-20 text-orange-500 mx-auto animate-bounce" style={{ animationDuration: '2s' }} />
-          <div className="absolute inset-0 bg-orange-500/30 blur-xl rounded-full animate-pulse" />
-        </div>
-        
-        <h1 className="text-7xl font-bold text-white mb-6 tracking-tight">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 animate-gradient">
-            RideWise
-          </span>
-        </h1>
-        
-        <p className="text-2xl text-gray-300 mb-12 max-w-2xl font-light">
-          Your Journey Begins Here. Premium Bike Rentals at Your Fingertips.
-        </p>
-        
-        <div className="flex gap-6 flex-wrap justify-center">
-          <button className="group relative px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/50">
-            <span className="relative z-10 flex items-center gap-2">
-              <Bike className="w-5 h-5" />
-              Browse Bikes
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-          </button>
-          
-          <button className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border-2 border-white/20 transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-xl flex items-center gap-2">
-            <MapPin className="w-5 h-5" />
-            Find Location
-          </button>
-        </div>
-
         {/* Feature cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 max-w-5xl">
-          {[
-            { icon: Bike, title: 'Premium Fleet', desc: '50+ bikes available' },
-            { icon: Zap, title: 'Instant Booking', desc: 'Book in seconds' },
-            { icon: MapPin, title: 'Multiple Locations', desc: 'Across the city' },
-          ].map((feature, idx) => (
-            <div
-              key={idx}
-              className="group p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 transition-all duration-300 hover:bg-white/10 hover:scale-105 hover:border-orange-500/50"
-            >
-              <feature.icon className="w-12 h-12 text-orange-500 mb-4 group-hover:scale-110 transition-transform duration-300" />
-              <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-              <p className="text-gray-400">{feature.desc}</p>
-            </div>
-          ))}
-        </div>
       </div>
 
       <style jsx>{`
