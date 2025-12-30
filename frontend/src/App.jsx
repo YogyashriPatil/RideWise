@@ -6,11 +6,13 @@ import RideWiseBackground from "./background/NewBackground";
 
 import Home from "./pages/Home";
 import Landing from "./pages/Landing";
+import Landing1 from "./pages/Landinge1";
 function App() {
   return <div>
       {/* <Landing />     */}
-      <Home />
+      {/* <Home /> */}
       {/* <RideWiseBackground /> */}
+      <Landing1 />
     </div>
 }
 
