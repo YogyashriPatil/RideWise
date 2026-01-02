@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Bike, Wind, Zap, MapPin } from 'lucide-react';
 
-export default function RideWiseBackground() {
+export default function RideWiseBackground({children}) {
   const [scrollY, setScrollY] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -122,6 +122,7 @@ export default function RideWiseBackground() {
 
       {/* Main content area */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-8 text-center">
+          {children}
         {/* Feature cards */}
       </div>
 

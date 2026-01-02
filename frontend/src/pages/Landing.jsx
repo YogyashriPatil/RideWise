@@ -3,7 +3,7 @@ import NeonWaveBackground from "../background/NeonWaveBackground";
 import Logo from "../logo/Logo";
 export default function Landing() {
   return <div>
-        <NeonWaveBackground />
+      <NeonWaveBackground />
       <div style={{
         position: "fixed",
         zIndex: 9999,

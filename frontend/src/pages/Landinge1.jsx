@@ -6,7 +6,7 @@ export default function Landing1() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Custom background component */}
-      <RideWiseBackground />
+      <RideWiseBackground >
 
       {/* Main content area */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-8 text-center">
@@ -30,6 +30,7 @@ export default function Landing1() {
           ))}
         </div>
       </div>
+      </RideWiseBackground>
     </div>
   );
 }
