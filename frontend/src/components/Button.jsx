@@ -1,6 +1,6 @@
-export default function Button(){
-    return <div className="bg-amber-500">
-        <button>Start Here</button>
+export default function Button({text,icon}){
+    return <div >
+        <button className="rounded-2xl bg-blue-800 h-10 w-40">{text}</button>
     </div>
 }
 
