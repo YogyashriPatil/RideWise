@@ -3,7 +3,6 @@ export default function Button({ text }) {
     <button
       className="
         flex items-center justify-center
-        min-w-2 
         text-[20px] md:text-[24px]
         font-sans text-white
         cursor-pointer select-none
@@ -14,8 +13,7 @@ export default function Button({ text }) {
       "
     >
       <span
-        className="
-          w-full h-full
+        className="w-40 h-15
           px-6 py-4
           rounded-md
           bg-[rgb(5,6,45)]
