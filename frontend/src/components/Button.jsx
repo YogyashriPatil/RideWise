@@ -2,7 +2,7 @@ export default function Button({ text }) {
   return (
     <button
       className="
-        flex items-center justify-center
+        flex items-center justify-center w-40 h-15
         text-[20px] md:text-[24px]
         font-sans text-white
         cursor-pointer select-none
