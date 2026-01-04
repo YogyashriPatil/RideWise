@@ -1,8 +1,8 @@
 import RideWiseBackground from "../background/NewBackground";
 import Button from "../components/Button";
 import { InputBox } from "../components/InputBox";
-import { Link } from "react-router-dom";
-export const LoginPage = () => {
+
+export const SignUp = () => {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       <RideWiseBackground>
@@ -58,7 +58,7 @@ export const LoginPage = () => {
               <InputBox text="password" placeholder="Enter Password" />
               <Button text="Login" />
             </div>
-            <button className="text-blue-500 underline" onClick={() => navigate("/signup")}>Don't Have an Account ? </button>
+            <Link to="/Signup"><button className="text-blue-500 underline" onClick={navigate("")}>Don't Have an Account ? </button></Link>
           </div>
         </div>
       </RideWiseBackground>
