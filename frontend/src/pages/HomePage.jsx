@@ -1,11 +1,10 @@
-import NeonWaveBackground from "../background/NeonWaveBackground";
 import RideWiseBackground from "../background/NewBackground";
 import Navbar from "../components/Navbar";
 import Logo from "../logo/Logo";
 
-export default function Home(){
+export default function HomePage(){
     return <div>
-        <RideWiseBackground />
+        <RideWiseBackground >
         <div style={{
             position: "fixed",
             zIndex: 9999,
@@ -20,5 +19,6 @@ export default function Home(){
             <Navbar text="Profile" />
             <Navbar text="Review" />
         </div>
+        </RideWiseBackground>
     </div>
 }

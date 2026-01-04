@@ -1,19 +1,17 @@
-// import NeonWaveBackground from "./background/NeonWaveBackground";
-// import Button from "./components/Button";
-// import Logo from "./logo/Logo";
 import { BrowserRouter , Route, Routes } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { SignUp } from "./pages/SignUp";
 import Landing1 from "./pages/Landinge1";
-import { Home } from "lucide-react";
+import { AuthPage } from "./pages/AuthPage";
+import HomePage from "./pages/HomePage";
 function App() {
-  return <BrowserRouter>
+    return <BrowserRouter>
         <Routes>
             <Route path="/" element={<Landing1 />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/home" element={<Home />} />
-            
+            <Route path="/Auth" element={<AuthPage />} />
+            <Route path="/home" element={<HomePage />} />
         </Routes>
     </BrowserRouter>
 }
