@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import RideWiseBackground from "../background/NewBackground";
 import Navbar from "../components/Navbar";
 import Logo from "../logo/Logo";
 
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <RideWiseBackground>
       
@@ -18,7 +20,7 @@ export default function Home() {
         <main className="pt-28 px-6">
 
           {/* HERO SECTION */}
-          <section className="min-h-[80vh] flex flex-col items-center justify-center text-center">
+          <section className="min-h-[50vh] flex flex-col items-center justify-center text-center">
             
             <span className="mb-4 px-4 py-1 rounded-full bg-cyan-500/10 text-cyan-300 text-sm">
               ✨ Powered by Advanced ML
@@ -34,11 +36,11 @@ export default function Home() {
             </p>
 
             <div className="mt-10 flex gap-4">
-              <button className="px-8 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 transition">
+              <button className="px-8 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 transition" onClick={() => navigate("/predict")}>
                 Start Predicting →
               </button>
 
-              <button className="px-8 py-3 rounded-xl border border-white/20 hover:bg-white/5 transition">
+              <button className="px-8 py-3 rounded-xl border border-white/20 hover:bg-white/5 transition" onClick={() => navigate("/map")}>
                 📍 View Station Map
               </button>
             </div>

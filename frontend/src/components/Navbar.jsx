@@ -12,10 +12,10 @@ import {
 } from "react-icons/fi";
 
 import Logo from "../logo/Logo";
-
+import { NavLink, useNavigate } from "react-router-dom"
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate();
   return (
     <nav className="
       fixed top-0 left-0 w-full z-50
@@ -31,22 +31,22 @@ export default function Navbar() {
 
         {/* CENTER: Desktop Menu */}
         <ul className="hidden md:flex items-center gap-10 text-white/80">
-          <NavItem icon={<FiHome />} label="Home" />
-          <NavItem icon={<FiTrendingUp />} label="Predict" />
-          <NavItem icon={<FiMapPin />} label="Map" />
-          <NavItem icon={<FiInfo />} label="About" />
-          <NavItem icon={<FiMail />} label="Contact" />
+          <NavItem to="/home" icon={<FiHome />} label="Home" />
+          <NavItem to="/predict" icon={<FiTrendingUp />} label="Predict" />
+          <NavItem to="/map" icon={<FiMapPin />} label="Map" />
+          <NavItem to="/aboutus" icon={<FiInfo />} label="About" />
+          <NavItem to="/contact" icon={<FiMail />} label="Contact" />
         </ul>
 
         {/* RIGHT: Desktop Actions */}
         <div className="hidden md:flex items-center gap-4">
-          <button className="
+          <NavLink className="
             px-5 py-2 rounded-xl text-white font-medium
             bg-gradient-to-r from-cyan-400 to-purple-500
             hover:opacity-90 transition
-          ">
+          " onClick={() => navigate("/reserve")}>
             Reserve Bike
-          </button>
+          </NavLink>
 
           <IconButton icon={<FiSun />} />
           <IconButton icon={<FiUser />} />
@@ -69,11 +69,11 @@ export default function Navbar() {
           border-t border-white/10
         ">
           <ul className="flex flex-col px-6 py-6 gap-4 text-white/80">
-            <MobileItem icon={<FiHome />} label="Home" />
-            <MobileItem icon={<FiTrendingUp />} label="Predict" />
-            <MobileItem icon={<FiMapPin />} label="Map" />
-            <MobileItem icon={<FiInfo />} label="About" />
-            <MobileItem icon={<FiMail />} label="Contact" />
+            <MobileItem to="/home" icon={<FiHome />} label="Home" />
+            <MobileItem to="/predict" icon={<FiTrendingUp />} label="Predict" />
+            <MobileItem to="/map" icon={<FiMapPin />} label="Map" />
+            <MobileItem to="/aboutus" icon={<FiInfo />} label="About" />
+            <MobileItem to="/contact" icon={<FiMail />} label="Contact" />
 
             <div className="flex gap-3 pt-4">
               <button className="
@@ -95,18 +95,28 @@ export default function Navbar() {
 
 /* ---------- Reusable ---------- */
 
-const NavItem = ({ icon, label }) => (
-  <li className="flex items-center gap-2 cursor-pointer hover:text-cyan-300 transition">
+const NavItem = ({ to , icon, label }) => (
+  <NavLink to={to} className={({ isActive }) =>
+        `flex items-center gap-2 px-4 py-2 rounded-xl transition
+        ${isActive
+          ? "bg-white/10 text-cyan-400"
+          : "text-white hover:bg-white/5"}`}>
     <span className="text-lg">{icon}</span>
     <span className="text-sm font-medium">{label}</span>
-  </li>
+  </NavLink>
 );
 
-const MobileItem = ({ icon, label }) => (
-  <li className="flex items-center gap-3 py-2 text-lg hover:text-cyan-300 transition cursor-pointer">
+const MobileItem = ({to, icon, label }) => (
+  <NavLink to={to}
+      className={({ isActive }) =>
+        `flex items-center gap-2 px-4 py-2 rounded-xl transition
+        ${isActive
+          ? "bg-white/10 text-cyan-400"
+          : "text-white hover:bg-white/5"}`
+      }>
     <span className="text-xl">{icon}</span>
     <span>{label}</span>
-  </li>
+  </NavLink>
 );
 
 const IconButton = ({ icon }) => (

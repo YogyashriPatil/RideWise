@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import RideWiseBackground from "../background/NewBackground";
 import Navbar from "../components/Navbar";
 import Logo from "../logo/Logo";
 
 export default function Landing() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen text-white">
       {/* Same background already applied globally */}
@@ -37,7 +39,7 @@ export default function Landing() {
             </button>
 
             <button className="px-8 py-4 rounded-xl font-semibold
-              border border-white/20 hover:bg-white/5">
+              border border-white/20 hover:bg-white/5" onClick={() => navigate("/auth")}>
               View Demo
             </button>
           </div>
@@ -128,7 +130,7 @@ export default function Landing() {
             </p>
 
             <button className="px-10 py-4 rounded-xl font-semibold
-              bg-gradient-to-r from-cyan-400 to-purple-500 text-black">
+              bg-gradient-to-r from-cyan-400 to-purple-500 text-black" onClick={() => navigate("/auth")}>
               Try RideWise Now
             </button>
           </div>
