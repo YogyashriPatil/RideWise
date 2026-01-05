@@ -1,25 +1,26 @@
 import { useState } from "react";
-import NeonWaveBackground from "../background/NeonWaveBackground";
-import TopNavbar from "../components/TopNavbar";
-import SideNavbar from "../components/SideNavbar";
+import Navbar from "../components/Navbar";
 import InputPanel from "../components/InputPanel";
-import PredictionPanel from "../components/PredictionPanel";
+import ReadyToPredict from "../components/ReadyToPredict";
+import { AIInsights, ForecastChart, SeasonalChart, WeatherImpact } from "../components/AIInsights";
+import SideNavbar from "../components/Sidebar";
+import SummaryCards from "../components/SummaryCards";
+import RideWiseBackground from "../background/NewBackground";
 
 export default function Predict() {
-  const [result, setResult] = useState(null);
+  const [predicted, setPredicted] = useState(false);
 
-  const handlePredict = (data) => {
-    // TEMP logic (replace with API)
-    const prediction = Math.floor(
-      data.temp * 3 + data.humidity + (data.weekend ? 50 : 0)
-    );
-    setResult(prediction);
+  const handlePredict = () => {
+    // simulate ML API delay
+    setTimeout(() => {
+      setPredicted(true);
+    }, 800);
   };
 
   return (
     <div className="min-h-screen text-white">
-      <NeonWaveBackground />
-      <TopNavbar />
+    <RideWiseBackground>
+      <Navbar />
 
       <div className="flex">
         <SideNavbar />
@@ -30,12 +31,35 @@ export default function Predict() {
             Predict bike rental demand with advanced machine learning models
           </p>
 
-          <div className="flex gap-8">
-            <InputPanel onPredict={handlePredict} />
-            <PredictionPanel result={result} />
-          </div>
+          {/* BEFORE PREDICT */}
+          {!predicted && (
+            <div className="flex gap-8">
+              <InputPanel onPredict={handlePredict} />
+              <ReadyToPredict />
+            </div>
+          )}
+
+          {/* AFTER PREDICT */}
+          {predicted && (
+            <>
+              <SummaryCards />
+
+              <div className="grid grid-cols-2 gap-8 mt-8">
+                <InputPanel onPredict={handlePredict} />
+                <ForecastChart />
+              </div>
+
+              <div className="grid grid-cols-2 gap-8 mt-8">
+                <WeatherImpact />
+                <SeasonalChart />
+              </div>
+
+              <AIInsights />
+            </>
+          )}
         </main>
       </div>
+      </RideWiseBackground>
     </div>
   );
 }
