@@ -5,7 +5,7 @@ import RideWiseBackground from "../background/NewBackground";
 import SideNavbar from "../components/Sidebar";
 
 export default function Reservations() {
-  const [reservations, setReservations] = useState([
+  const [reservations] = useState([
     {
       id: 1,
       station: "Connaught Place, Delhi",
@@ -27,14 +27,47 @@ export default function Reservations() {
   ]);
 
   return (
-    <div className="min-h-screen text-white">
-      <RideWiseBackground>
-      <Navbar />
+    <div className="min-h-screen text-white relative overflow-hidden">
 
-      <div className="flex pt-24 px-8 gap-8">
+      {/* 🌌 Background */}
+      <RideWiseBackground >
+
+      {/* 🔝 Navbar */}
+      <div className="relative z-20">
+        <Navbar />
+      </div>
+
+      {/* 🔹 INTERNAL CSS */}
+      <style>{`
+        .input {
+          width: 100%;
+          padding: 12px 14px;
+          border-radius: 12px;
+          background: rgba(0, 0, 0, 0.45);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          color: white;
+          transition: all 0.25s ease;
+        }
+        .input::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+        }
+        .input:focus {
+          outline: none;
+          border-color: #22d3ee;
+          box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.25);
+        }
+      `}</style>
+
+      {/* 🔹 PAGE CONTENT */}
+      <div className="relative z-10 flex pt-28 px-8 gap-8">
+
+        {/* 📌 Sidebar */}
         <SideNavbar />
+
         {/* ================= NEW RESERVATION ================= */}
-        <div className="w-[420px] bg-black/30 border border-white/10 rounded-2xl p-6">
+        <div className="w-[420px] bg-black/30 backdrop-blur
+          border border-white/10 rounded-2xl p-6 h-fit">
+
           <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
             🚲 New Reservation
           </h2>
@@ -60,22 +93,27 @@ export default function Reservations() {
             <option>3 hours</option>
           </select>
 
-          <button className="w-full mt-6 py-3 rounded-xl font-semibold
-            bg-gradient-to-r from-cyan-400 to-purple-500 text-black">
+          <button
+            className="w-full mt-6 py-3 rounded-xl font-semibold
+            bg-gradient-to-r from-cyan-400 to-purple-500
+            text-black hover:opacity-90 transition"
+          >
             Reserve Bike
           </button>
         </div>
 
         {/* ================= MY RESERVATIONS ================= */}
-        <div className="flex-1 bg-black/30 border border-white/10 rounded-2xl p-6">
+        <div className="flex-1 bg-black/30 backdrop-blur
+          border border-white/10 rounded-2xl p-6">
+
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-semibold flex items-center gap-2">
               📅 My Reservations
             </h2>
 
             <input
-              placeholder="Search reservations..."
               className="input w-64"
+              placeholder="Search reservations..."
             />
           </div>
 
