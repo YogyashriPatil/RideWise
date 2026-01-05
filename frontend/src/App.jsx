@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import DashBoard from "./pages/DashBoard";
 import Predict from "./pages/Predict";
 import MapPage from "./pages/MapPage";
+import About from "./pages/About";
 function App() {
     return <BrowserRouter>
         <Routes>
@@ -13,6 +14,7 @@ function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/predict" element={<Predict />} />
             <Route path="/map" element={<MapPage />} />
+            <Route path="/aboutus" element={<About />} />
         
         </Routes>
     </BrowserRouter>
