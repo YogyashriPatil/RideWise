@@ -4,6 +4,7 @@ import { AuthPage } from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
 import DashBoard from "./pages/DashBoard";
 import Predict from "./pages/Predict";
+import MapPage from "./pages/MapPage";
 function App() {
     return <BrowserRouter>
         <Routes>
@@ -11,6 +12,8 @@ function App() {
             <Route path="/Auth" element={<AuthPage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/predict" element={<Predict />} />
+            <Route path="/map" element={<MapPage />} />
+        
         </Routes>
     </BrowserRouter>
 }
