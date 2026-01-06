@@ -1,46 +1,38 @@
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-import { stations } from "../data/stations";
-
-const center = { lat: 20.5937, lng: 78.9629 }; // India
+import { useEffect, useRef } from "react";
 
 export default function StationMap({ onSelect }) {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-  });
+  const mapRef = useRef(null);
 
-  if (!isLoaded) {
-    return <div className="h-full flex items-center justify-center">Loading map...</div>;
-  }
+  useEffect(() => {
+    if (!window.google) return;
+
+    const map = new window.google.maps.Map(mapRef.current, {
+      center: { lat: 20.5937, lng: 78.9629 }, // India
+      zoom: 5,
+      styles: darkMapStyle, // optional
+    });
+
+    const stations = [
+      { name: "Delhi", lat: 28.6139, lng: 77.209 },
+      { name: "Mumbai", lat: 19.076, lng: 72.8777 },
+      { name: "Bengaluru", lat: 12.9716, lng: 77.5946 },
+    ];
+
+    stations.forEach((s) => {
+      const marker = new window.google.maps.Marker({
+        position: { lat: s.lat, lng: s.lng },
+        map,
+      });
+
+      marker.addListener("click", () => {
+        onSelect?.(s);
+      });
+    });
+  }, []);
 
   return (
-    <GoogleMap
-      zoom={5}
-      center={center}
-      mapContainerClassName="w-full h-full rounded-2xl"
-      options={{
-        disableDefaultUI: true,
-        zoomControl: true,
-        styles: [
-          { elementType: "geometry", stylers: [{ color: "#0b1220" }] },
-          { elementType: "labels.text.fill", stylers: [{ color: "#9ca3af" }] },
-        ],
-      }}
-    >
-      {stations.map((s) => (
-        <Marker
-          key={s.id}
-          position={{ lat: s.lat, lng: s.lng }}
-          icon={{
-            url:
-              s.demand === "high"
-                ? "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
-                : s.demand === "medium"
-                ? "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
-                : "http://maps.google.com/mapfiles/ms/icons/cyan-dot.png",
-          }}
-          onClick={() => onSelect(s)}
-        />
-      ))}
-    </GoogleMap>
+    <div className="w-full h-full rounded-2xl overflow-hidden border border-white/10">
+      <div ref={mapRef} className="w-full h-full" />
+    </div>
   );
 }
