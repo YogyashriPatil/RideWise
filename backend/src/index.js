@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import stationRoutes from "./routes/station.routes.js";
 import reservationRoutes from "./routes/reservation.routes.js";
+import userRoutes from "./routes/auth.routes.js";
 
 
 dotenv.config();
@@ -18,7 +19,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/stations", stationRoutes);
 app.use("/api/reservations", reservationRoutes);
-
+app.use("/api/user", userRoutes)
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
