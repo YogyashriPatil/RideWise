@@ -84,7 +84,9 @@ export default function Navbar() {
               </button>
 
               <IconButton icon={<FiSun />} />
-              <IconButton icon={<FiUser />} />
+              <NavLink to="/profile">
+                <IconButton icon={<FiUser />} />
+              </NavLink>
             </div>
           </ul>
         </div>

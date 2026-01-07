@@ -7,6 +7,7 @@ import MapPage from "./pages/MapPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Reservations from "./pages/Reservations";
+import Profile from "./pages/Profile";
 function App() {
     return <BrowserRouter>
         <Routes>
@@ -18,6 +19,7 @@ function App() {
             <Route path="/aboutus" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/reserve" element={<Reservations />} />
+            <Route path="/profile" element={<Profile />} />
         
         </Routes>
     </BrowserRouter>
