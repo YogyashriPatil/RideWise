@@ -66,10 +66,15 @@ export const AuthPage = () => {
                 password: form.password,
               }),
             });
+            console.log("LOGIN DATA:", {
+              email: form.email,
+              password: form.password,
+            });
+
             const data = await res.json();
             if (!res.ok){
               setLoading(false);
-              return alert
+              return alert(data.message || "invalid email or password")
             }
                 // save user session
             localStorage.setItem("user", JSON.stringify(data));
