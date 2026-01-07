@@ -2,24 +2,37 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import InputPanel from "../components/InputPanel";
 import ReadyToPredict from "../components/ReadyToPredict";
-import {
-  AIInsights,
-  ForecastChart,
-  SeasonalChart,
-  WeatherImpact
-} from "../components/AIInsights";
+import { AIInsights, ForecastChart, SeasonalChart, WeatherImpact } from "../components/AIInsights";
 import SideNavbar from "../components/Sidebar";
 import SummaryCards from "../components/SummaryCards";
 import RideWiseBackground from "../background/NewBackground";
 
 export default function DayPredict() {
   const [predicted, setPredicted] = useState(false);
+  const [predictionData, setPredictionData] = useState(null);
 
-  const handlePredict = () => {
-    // simulate Day-based ML API delay
-    setTimeout(() => {
-      setPredicted(true);
-    }, 800);
+  // const handlePredict = async () => {
+  //   // simulate Day-based ML API delay
+  //   const payload = {
+  //     day,
+  //     temperature,
+  //     humidity,
+  //     season,
+  //     isHoliday
+  //   };
+  //   const res = await fetch("http://localhost:5000/api/predict/day", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify(payload)
+  //   });
+  //   const data = await res.json();
+  //   onPredict(data); // pass to parent
+  // };
+  const handlePredict = (result) => {
+    setPredictionData(result);
+    setPredicted(true);
   };
 
   return (
@@ -51,24 +64,24 @@ export default function DayPredict() {
             )}
 
             {/* AFTER PREDICT */}
-            {predicted && (
+            {predicted && predictionData && (
               <>
-                <SummaryCards />
+                <SummaryCards data={predictionData}/>
 
                 <div className="grid grid-cols-2 gap-8 mt-8">
                   <InputPanel
                     mode="day"
                     onPredict={handlePredict}
                   />
-                  <ForecastChart />
+                  <ForecastChart data={predictionData} />
                 </div>
 
                 <div className="grid grid-cols-2 gap-8 mt-8">
-                  <WeatherImpact />
-                  <SeasonalChart />
+                  <WeatherImpact data={predictionData} />
+                  <SeasonalChart data={predictionData} />
                 </div>
 
-                <AIInsights />
+                <AIInsights data={predictionData} />
               </>
             )}
           </main>

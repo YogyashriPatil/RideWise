@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function InputPanel({ onPredict }) {
+export default function InputPanel({ onPredict, mode }) {
   const [data, setData] = useState({
     season: "Summer",
     weather: "Clear",
@@ -9,6 +9,30 @@ export default function InputPanel({ onPredict }) {
     wind: 15,
     weekend: false
   });
+
+  // 🔥 CALL BACKEND HERE
+  const handlePredict = async () => {
+    const endpoint =
+      mode === "day"
+        ? "http://localhost:5000/api/predict/day"
+        : "http://localhost:5000/api/predict/hour";
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+
+      // ✅ send BACKEND RESULT to parent (DayPredict / HourPredict)
+      onPredict(result);
+
+    } catch (err) {
+      console.error("Prediction failed:", err);
+    }
+  };
 
   return (
     <div className="w-[360px] p-6 rounded-2xl bg-black/30 border border-white/10">
@@ -29,13 +53,13 @@ export default function InputPanel({ onPredict }) {
       />
 
       <Slider label={`Temperature: ${data.temp}°C`} value={data.temp} min={0} max={40}
-        onChange={(e) => setData({ ...data, temp: e.target.value })} />
+        onChange={(e) => setData({ ...data, temp: +e.target.value })} />
 
       <Slider label={`Humidity: ${data.humidity}%`} value={data.humidity} min={0} max={100}
-        onChange={(e) => setData({ ...data, humidity: e.target.value })} />
+        onChange={(e) => setData({ ...data, humidity: +e.target.value })} />
 
       <Slider label={`Wind Speed: ${data.wind} km/h`} value={data.wind} min={0} max={40}
-        onChange={(e) => setData({ ...data, wind: e.target.value })} />
+        onChange={(e) => setData({ ...data, wind: +e.target.value })} />
 
       <div className="flex items-center gap-3 mt-4">
         <input
