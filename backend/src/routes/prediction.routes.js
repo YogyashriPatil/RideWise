@@ -1,6 +1,12 @@
 import express from "express";
-import { predictDemand } from "../controllers/prediction.controller.js";
+import {
+  dayPrediction,
+  hourPrediction,
+} from "../controllers/prediction.controller.js";
 
 const router = express.Router();
-router.post("/", predictDemand);
+
+router.post("/day", dayPrediction);
+router.post("/hour", hourPrediction);
+
 export default router;
