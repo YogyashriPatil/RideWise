@@ -15,6 +15,8 @@ import Logo from "../logo/Logo";
 import { NavLink, useNavigate } from "react-router-dom"
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [predictOpen, setPredictOpen] = useState(false);
+
   const navigate = useNavigate();
   return (
     <nav className="
@@ -32,7 +34,59 @@ export default function Navbar() {
         {/* CENTER: Desktop Menu */}
         <ul className="hidden md:flex items-center gap-10 text-white/80">
           <NavItem to="/home" icon={<FiHome />} label="Home" />
-          <NavItem to="/predict" icon={<FiTrendingUp />} label="Predict" />
+          <div className="relative">
+            <button
+              onClick={() => setPredictOpen(!predictOpen)}
+              className="
+                flex items-center gap-2 px-4 py-2 rounded-xl
+                text-white/80 hover:bg-white/5 transition
+              "
+            >
+              <FiTrendingUp className="text-lg" />
+              <span className="text-sm font-medium">Predict</span>
+            </button>
+
+            {/* Dropdown */}
+            {predictOpen && (
+              <div className="
+                absolute top-12 left-0
+                w-44 rounded-xl
+                bg-black/70 backdrop-blur-xl
+                border border-white/10
+                shadow-xl
+                overflow-hidden
+              ">
+                <button
+                  onClick={() => {
+                    setPredictOpen(false);
+                    navigate("/predict/day");
+                  }}
+                  className="
+                    w-full px-4 py-3 text-left
+                    text-white/80 hover:bg-white/5
+                    flex items-center gap-2
+                  "
+                >
+                  📅 Day Prediction
+                </button>
+
+                <button
+                  onClick={() => {
+                    setPredictOpen(false);
+                    navigate("/predict/hour");
+                  }}
+                  className="
+                    w-full px-4 py-3 text-left
+                    text-white/80 hover:bg-white/5
+                    flex items-center gap-2
+                  "
+                >
+                  ⏰ Hour Prediction
+                </button>
+              </div>
+            )}
+          </div>
+
           <NavItem to="/map" icon={<FiMapPin />} label="Map" />
           <NavItem to="/aboutus" icon={<FiInfo />} label="About" />
           <NavItem to="/contact" icon={<FiMail />} label="Contact" />
@@ -49,7 +103,10 @@ export default function Navbar() {
           </NavLink>
 
           <IconButton icon={<FiSun />} />
-          <IconButton icon={<FiUser />} />
+          <NavLink to="/profile">
+            <IconButton icon={<FiUser />}  />
+          </NavLink>
+          
         </div>
 
         {/* MOBILE: Hamburger */}
@@ -70,7 +127,30 @@ export default function Navbar() {
         ">
           <ul className="flex flex-col px-6 py-6 gap-4 text-white/80">
             <MobileItem to="/home" icon={<FiHome />} label="Home" />
-            <MobileItem to="/predict" icon={<FiTrendingUp />} label="Predict" />
+              <div className="space-y-2">
+              <button
+                onClick={() => navigate("/predict/day")}
+                className="
+                  w-full flex items-center gap-2 px-4 py-2 rounded-xl
+                  text-white hover:bg-white/5
+                "
+              >
+                <FiTrendingUp />
+                Day Prediction
+              </button>
+
+              <button
+                onClick={() => navigate("/predict/hour")}
+                className="
+                  w-full flex items-center gap-2 px-4 py-2 rounded-xl
+                  text-white hover:bg-white/5
+                "
+              >
+                <FiTrendingUp />
+                Hour Prediction
+              </button>
+            </div>
+
             <MobileItem to="/map" icon={<FiMapPin />} label="Map" />
             <MobileItem to="/aboutus" icon={<FiInfo />} label="About" />
             <MobileItem to="/contact" icon={<FiMail />} label="Contact" />

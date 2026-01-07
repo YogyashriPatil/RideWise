@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import RideWiseBackground from "../background/NewBackground";
 import Navbar from "../components/Navbar";
-
+import UserLocationMap from "../components/UserLocationMap";
 export default function Profile() {
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -103,10 +103,11 @@ export default function Profile() {
 
             {/* ===== LOCATION / SESSION INFO ===== */}
             <div className="col-span-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6">
-              <h2 className="text-2xl font-bold mb-4">Location & Session</h2>
+            <h2 className="text-2xl font-bold mb-4">Location & Session</h2>
 
-              {location ? (
-                <div className="grid grid-cols-2 gap-4">
+            {location ? (
+              <>
+                <div className="grid grid-cols-2 gap-4 mb-6">
                   <Info label="City" value={location.city} />
                   <Info label="Region" value={location.region} />
                   <Info label="Country" value={location.country_name} />
@@ -114,10 +115,15 @@ export default function Profile() {
                   <Info label="Timezone" value={location.timezone} />
                   <Info label="ISP" value={location.org} />
                 </div>
-              ) : (
-                <p className="text-white/60">Detecting location...</p>
-              )}
-            </div>
+
+                {/* MAP */}
+                <UserLocationMap location={location} />
+              </>
+            ) : (
+              <p className="text-white/60">Detecting location...</p>
+            )}
+          </div>
+
           </div>
 
           {/* ================= USER ACTIVITY ================= */}
