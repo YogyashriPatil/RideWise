@@ -16,67 +16,34 @@ router.post("/day", (req, res) => {
     weekend
   } = req.body;
 
-  // 🔒 Basic validation
-  if (
-    season === undefined ||
-    weather === undefined ||
-    temp === undefined
-  ) {
-    return res.status(400).json({ error: "Missing required inputs" });
-  }
+    console.log("📥 Input received:", req.body);
 
-  // -----------------------------
-  // 🧠 DAY PREDICTION LOGIC
-  // -----------------------------
-  let demand = 300; // base demand
+    const python = spawn("python", [
+      "day_predict.py",
+      JSON.stringify(req.body)
+    ]);
+    let result = "";
+    python.stdout.on("data", (data) => {
+      result += data.toString();
+    });
 
-  // Season impact
-  if (season === "Summer") demand += 120;
-  if (season === "Spring") demand += 80;
-  if (season === "Fall") demand += 40;
-  if (season === "Winter") demand -= 60;
-
-  // Weather impact
-  if (weather === "Clear") demand += 100;
-  if (weather === "Cloudy") demand += 40;
-  if (weather === "Rainy") demand -= 120;
-
-  // Temperature impact
-  if (temp >= 20 && temp <= 30) demand += 90;
-  else if (temp < 10 || temp > 38) demand -= 70;
-
-  // Humidity impact
-  if (humidity > 80) demand -= 50;
-  if (humidity < 40) demand += 30;
-
-  // Wind impact
-  if (wind > 25) demand -= 40;
-
-  // Weekend impact
-  if (weekend) demand += 150;
-
-  // Avoid negative demand
-  demand = Math.max(demand, 50);
-
-  // Confidence (fake but dynamic)
-  const confidence = `${Math.min(95, 70 + Math.floor(Math.random() * 20))}%`;
-
-  // -----------------------------
+    python.stderr.on("data", (err) => {
+      console.error("❌ Python error:", err.toString());
+    });
+    // -----------------------------
   // ✅ FINAL RESPONSE
   // -----------------------------
-  const response = {
-    type: "day",
-    predictedDemand: Math.round(demand),
-    confidence,
-    insights: {
-      season,
-      weather,
-      weekend
-    }
-  };
-
-  console.log("📤 Sending prediction:", response);
-  res.json(response);
+    python.on("close", () => {
+      try {
+        const parsed = JSON.parse(result);
+        console.log("📤 Prediction:", parsed);
+        res.json(parsed);
+      } catch (e) {
+        res.status(500).json({ error: "Prediction failed" });
+      }
+    });
+    console.log("📤 Sending prediction:", response);
+    // res.json(response);
 });
 
 export default router;
