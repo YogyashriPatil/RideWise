@@ -4,7 +4,9 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import stationRoutes from "./routes/station.routes.js";
 import reservationRoutes from "./routes/reservation.routes.js";
+
 import userRoutes from "./routes/auth.routes.js";
+import predictionRoutes from "./routes/prediction.routes.js";
 
 
 dotenv.config();
