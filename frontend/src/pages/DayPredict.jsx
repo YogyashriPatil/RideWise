@@ -6,7 +6,8 @@ import { AIInsights, ForecastChart, SeasonalChart, WeatherImpact } from "../comp
 import SideNavbar from "../components/Sidebar";
 import SummaryCards from "../components/SummaryCards";
 import RideWiseBackground from "../background/NewBackground";
-
+import HourlyForecastChart from "../components/HourlyForecastChart";
+import { generateHourlyForecast } from "../utils/generateHourlyForecast";
 export default function DayPredict() {
   const [predicted, setPredicted] = useState(false);
   const [predictionData, setPredictionData] = useState(null);
@@ -31,7 +32,9 @@ export default function DayPredict() {
   //   onPredict(data); // pass to parent
   // };
   const handlePredict = (result) => {
-    setPredictionData(result);
+    setPredictionData({ ...result,
+      hourlyForecast: generateHourlyForecast(result.predictionData)
+     });
     setPredicted(true);
   };
 
@@ -73,7 +76,8 @@ export default function DayPredict() {
                     mode="day"
                     onPredict={handlePredict}
                   />
-                  <ForecastChart data={predictionData} />
+                  <HourlyForecastChart data={predictionData.hourlyForecast} />
+                  {/* <ForecastChart data={predictionData} /> */}
                 </div>
 
                 <div className="grid grid-cols-2 gap-8 mt-8">
