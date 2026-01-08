@@ -1,26 +1,27 @@
 import express from "express";
 const router = express.Router();
-
+import { spawn } from "child_process";
+import path from "path";
 /**
  * DAY-WISE BIKE RENTAL PREDICTION
  */
 router.post("/day", (req, res) => {
-  console.log("📥 Received day prediction input:", req.body);
-
-  const {
-    season,
-    weather,
-    temp,
-    humidity,
-    wind,
-    weekend
-  } = req.body;
-
-    console.log("📥 Input received:", req.body);
-
+    console.log("📥 Received day prediction input:", req.body);
+    const features = req.body.features;
+    console.log("📥 Features received:", features);
+        console.log("📥 Input received:", req.body);
+    const pythonFile = path.join(
+      process.cwd(),
+      "src",
+      "ml-service",
+      "day_predict.py"
+    )
     const python = spawn("python", [
-      "day_predict.py",
-      JSON.stringify(req.body)
+        pythonFile,
+        "day",
+        JSON.stringify({
+          features: features
+        })
     ]);
     let result = "";
     python.stdout.on("data", (data) => {
@@ -38,11 +39,12 @@ router.post("/day", (req, res) => {
         const parsed = JSON.parse(result);
         console.log("📤 Prediction:", parsed);
         res.json(parsed);
+        console.log(parsed)
       } catch (e) {
         res.status(500).json({ error: "Prediction failed" });
       }
     });
-    console.log("📤 Sending prediction:", response);
+    // console.log("📤 Sending prediction:", response);
     // res.json(response);
 });
 
