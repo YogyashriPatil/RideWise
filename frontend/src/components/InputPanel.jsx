@@ -1,38 +1,58 @@
 import { useState } from "react";
 
 export default function InputPanel({ onPredict, mode }) {
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     season: "Summer",
     weather: "Clear",
     temp: 20,
-    humidity: 65,
-    wind: 15,
+    humidity: 60,
+    wind: 10,
     weekend: false
   });
 
   // 🔥 CALL BACKEND HERE
-  const handlePredict = async () => {
-    const endpoint =
-      mode === "day"
-        ? "http://localhost:5000/api/predict/day"
-        : "http://localhost:5000/api/predict/hour";
+    const handlePredict = async () => {
+      setLoading(true);
+      const payload = {
+        season: data.season === "Summer" ? 1 :
+                data.season === "Winter" ? 4 :
+                data.season === "Spring" ? 2 : 3,
 
-    try {
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
+        weather: data.weather === "Clear" ? 0 :
+                data.weather === "Cloudy" ? 1 : 2,
 
-      const result = await res.json();
+        temp: Number(data.temp),
+        atemp: Number(data.temp) + 2,
+        humidity: Number(data.humidity),
+        windspeed: Number(data.wind),
+        weekend: data.weekend ? 1 : 0,
 
-      // ✅ send BACKEND RESULT to parent (DayPredict / HourPredict)
-      onPredict(result);
+        holiday: 0,
+        workingday: data.weekend ? 0 : 1,
 
-    } catch (err) {
-      console.error("Prediction failed:", err);
-    }
-  };
+        month: new Date().getMonth() + 1,
+        year: new Date().getFullYear(),
+        dayofweek: new Date().getDay(),
+        is_peak_hour: 0
+      };
+
+      try {
+        const res = await fetch("http://localhost:5000/api/predict/day", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        onPredict(result);
+      }
+      catch(err){
+        console.error("Prediction failed:", err);
+      }
+      finally{
+        setLoading(false);
+      }
+    };
 
   return (
     <div className="w-[360px] p-6 rounded-2xl bg-black/30 border border-white/10">
@@ -70,11 +90,11 @@ export default function InputPanel({ onPredict, mode }) {
         <span className="text-gray-300">Weekend</span>
       </div>
 
-      <button
-        onClick={() => onPredict(data)}
+      <button disabled={loading}
+        onClick={handlePredict}
         className="w-full mt-6 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-purple-500 text-black font-semibold"
       >
-        Predict Rentals
+        {loading ? "Predicting ... " : "Predict Rentals "} 
       </button>
     </div>
   );
