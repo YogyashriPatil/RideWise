@@ -19,9 +19,7 @@ router.post("/day", (req, res) => {
     const python = spawn("python", [
         pythonFile,
         "day",
-        JSON.stringify({
-          features: features
-        })
+        JSON.stringify(req.body)
     ]);
     let result = "";
     python.stdout.on("data", (data) => {
