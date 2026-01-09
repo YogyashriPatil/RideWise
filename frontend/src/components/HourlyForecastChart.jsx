@@ -21,65 +21,52 @@ export default function HourlyForecastChart({ data }) {
         24-Hour Forecast
       </h3>
 
-      <ResponsiveContainer width="100%" height={320}>
+      <ResponsiveContainer width="100%" height={350}>
         <LineChart data={data}>
           
           {/* Dotted grid */}
           <CartesianGrid
-            stroke="rgba(255,255,255,0.08)"
-            strokeDasharray="3 6"
+            stroke="#1f2937"
+            strokeDasharray="3 3"
           />
 
           <XAxis
-            dataKey="hour"
-            stroke="rgba(255,255,255,0.5)"
+            dataKey="time"
+            stroke="#9ca3af"
             tick={{ fontSize: 12 }}
           />
 
           <YAxis
-            stroke="rgba(255,255,255,0.5)"
+            stroke="#9ca3af"
             tick={{ fontSize: 12 }}
           />
 
           {/* Tooltip */}
           <Tooltip
             contentStyle={{
-              backgroundColor: "#0f172a",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: "10px",
-              color: "#fff"
+              backgroundColor: "#020617",
+              borderRadius: "8px",
+              border: "1px solid #334155",
             }}
+            labelStyle={{ color: "#e5e7eb" }}
           />
 
-          {/* Legend */}
-          <Legend
-            verticalAlign="bottom"
-            iconType="circle"
-            formatter={(value) => (
-              <span className="text-sm text-white">{value}</span>
-            )}
-          />
-
-          {/* Predicted line */}
+            {/* Predicted Line */}
           <Line
             type="monotone"
             dataKey="predicted"
-            name="predicted"
             stroke="#22d3ee"
             strokeWidth={3}
-            dot={{ r: 4, strokeWidth: 2 }}
+            dot={{ r: 4 }}
             activeDot={{ r: 6 }}
           />
-
-          {/* Actual line */}
+          {/* Actual Line */}
           <Line
             type="monotone"
             dataKey="actual"
-            name="actual"
-            stroke="#a855f7"
+            stroke="#c084fc"
             strokeWidth={3}
-            strokeDasharray="4 4"
-            dot={{ r: 4, strokeWidth: 2 }}
+            dot={{ r: 4 }}
             activeDot={{ r: 6 }}
           />
 
