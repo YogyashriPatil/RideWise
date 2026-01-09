@@ -57,9 +57,9 @@ export default function DayPredict() {
 
             {/* BEFORE PREDICT */}
             {!predicted && (
-              <div className="flex gap-8">
+              <div className="grid grid-cols-12 gap-8">
                 <InputPanel
-                  mode="day"           // 👈 day-specific hint
+                  mode="day"
                   onPredict={handlePredict}
                 />
                 <ReadyToPredict />
@@ -71,13 +71,16 @@ export default function DayPredict() {
               <>
                 <SummaryCards data={predictionData}/>
 
-                <div className="grid grid-cols-2 gap-8">
+                <div className="col-span-12 lg:col-span-4">
                   <InputPanel
                     mode="day"
                     onPredict={handlePredict}
                   />
                   { !predicted ? ( <ReadyToPredict />) : 
-                    (<HourlyForecastChart data={predictionData.hourlyForecast} />)
+                    ( 
+                      <div className="col-span-12 lg:col-span-8">
+                        <HourlyForecastChart data={predictionData.hourlyForecast} />
+                      </div>)
                   }
                   {/* <ForecastChart data={predictionData} /> */}
                 </div>
