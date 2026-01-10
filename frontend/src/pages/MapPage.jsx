@@ -10,40 +10,57 @@ export default function MapPage() {
   const [selectedStation, setSelectedStation] = useState(null);
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="h-screen w-full overflow-hidden text-white">
       <RideWiseBackground >
       <Navbar />
 
-      <div className="flex">
-        <SideNavbar />
+      <div className="flex h-[calc(100vh-60px)]">
+        <div className="w-64 h-full">
+          <SideNavbar />
+        </div>
 
-        <main className="flex-1 pt-28 px-10">
-          <h1 className="text-4xl font-bold mb-2">
-            Real-Time Station Tracking
-          </h1>
-          <p className="text-gray-400 mb-6">
-            AI Powered Bike Rental Prediction – Live station monitoring
-          </p>
+         <div className="flex-1 h-full overflow-y-auto px-10 pt-28 space-y-8">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+              Real-Time Station Tracking
+            </h1>
+            <p className="text-gray-400 mt-2">
+              AI Powered Bike Rental Prediction – Live station monitoring
+            </p>
+          </div>
 
-          <input
-            placeholder="Search for any location worldwide..."
-            className="w-full mb-6 px-4 py-3 rounded-xl bg-black/30 border border-white/10"
-          />
+          {/* SEARCH BAR */}
+          <div className="max-w-3xl mx-auto">
+            <input
+              type="text"
+              placeholder="Search for any location worldwide..."
+              className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+            />
+          </div>
 
-          <div className="grid grid-cols-3 gap-8">
-            <div className="col-span-2 h-[500px]">
-              
-              <StationMap onSelect={setSelectedStation} />
+          {/* MAP + RIGHT PANEL */}
+          <div className="grid grid-cols-12 gap-8">
+
+            {/* MAP */}
+            <div className="col-span-12 lg:col-span-8 h-[420px] rounded-2xl overflow-hidden bg-[#0b1220]/80 border border-white/10 shadow-lg">
+              <StationMap onSelectStation={setSelectedStation} />
             </div>
 
-            <div>
-              
-              <StationInfo station={selectedStation} />
+            {/* RIGHT SIDE */}
+            <div className="col-span-12 lg:col-span-4 space-y-6">
+              {selectedStation ? (
+                <StationInfo station={selectedStation} />
+              ) : (
+                <div className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-gray-400">
+                  Select a station on the map
+                </div>
+              )}
+
               <NetworkSummary />
             </div>
           </div>
-        </main>
-      </div>
+        </div>
+        </div>
       </RideWiseBackground>
     </div>
   );

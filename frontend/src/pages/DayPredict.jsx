@@ -39,61 +39,60 @@ export default function DayPredict() {
   };
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="h-screen text-white  w-full overflow-hidden flex bg-gradient-to-br from-[#2b145f] via-[#4b1f8f] to-[#1a0b3d]">
       <RideWiseBackground>
         <Navbar />
 
-        <div className="flex">
-          <SideNavbar />
+        <div className="flex h-[calc(100vh-64px)]">
+          <div className="w-64 h-full">
+            <SideNavbar />
+          </div>
+          
+            {/* 2️⃣ INPUT PANEL (STABLE) */}
+            <div className="w-[380px] h-full pt-28 px-6">
+              <InputPanel mode="day" onPredict={handlePredict} />
+            </div>
 
-          <main className="flex-1 pt-28 px-10">
-            <h1 className="text-4xl font-bold mb-2">
-              Day-wise AI Prediction
-            </h1>
+            <div className="flex-1 h-full overflow-y-auto pt-28 px-10 space-y-8">
 
-            <p className="text-gray-400 mb-6">
-              Predict bike rental demand based on day patterns using machine learning
-            </p>
+              <div>
+                <h1 className="text-4xl font-bold mb-2">
+                  Day-wise AI Prediction
+                </h1>
+
+                <p className="text-gray-400 mb-6">
+                  Predict bike rental demand based on day patterns using machine learning
+                </p>
+              </div>
+            
 
             {/* BEFORE PREDICT */}
-            {!predicted && (
-              <div className="grid grid-cols-12 gap-8">
-                <InputPanel
-                  mode="day"
-                  onPredict={handlePredict}
-                />
+            {!predicted &&
                 <ReadyToPredict />
-              </div>
-            )}
+            }
 
             {/* AFTER PREDICT */}
             {predicted && predictionData && (
               <>
                 <SummaryCards data={predictionData}/>
 
-                <div className="col-span-12 lg:col-span-4">
-                  <InputPanel
-                    mode="day"
-                    onPredict={handlePredict}
-                  />
-                  { !predicted ? ( <ReadyToPredict />) : 
-                    ( 
-                      <div className="col-span-12 lg:col-span-8">
-                        <HourlyForecastChart data={predictionData.hourlyForecast} />
-                      </div>)
-                  }
-                  {/* <ForecastChart data={predictionData} /> */}
+                <div className="rounded-2xl bg-black/40 backdrop-blur-xl p-6">
+                  <h2 className="text-xl font-semibold mb-4">
+                    24-Hour Forecast
+                  </h2>
+                  <HourlyForecastChart data={predictionData.hourlyForecast} />
                 </div>
-
-                <div className="grid grid-cols-2 gap-8 mt-8">
+                  {/* Weather + Seasonal */}
+                <div className="grid grid-cols-2 gap-8">
                   <WeatherImpact data={predictionData} />
                   <SeasonalChart data={predictionData} />
                 </div>
 
+                {/* AI Insights */}
                 <AIInsights data={predictionData} />
               </>
             )}
-          </main>
+          </div>
         </div>
       </RideWiseBackground>
     </div>

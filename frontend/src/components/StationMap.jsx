@@ -1,38 +1,62 @@
-import { useEffect, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import { stations } from "../data/stations";
+import "leaflet/dist/leaflet.css";
+import { CircleMarker } from "react-leaflet";
+// Fix marker icon issue
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
 
 export default function StationMap({ onSelect }) {
-  const mapRef = useRef(null);
+  
+return (
+    <div className="w-full h-full rounded-2xl overflow-hidden">
+      <MapContainer
+        center={[22.9734, 78.6569]}
+        zoom={5}
+        className="w-full h-full"
+      >
+        {/* Dark realistic map */}
+        <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+        />
+        <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png"
+        />
 
-  useEffect(() => {
-    if (!window.google) return;
-
-    const map = new window.google.maps.Map(mapRef.current, {
-      center: { lat: 20.5937, lng: 78.9629 }, // India
-      zoom: 5,
-      styles: darkMapStyle, // optional
-    });
-
-    const stations = [
-      { name: "Delhi", lat: 28.6139, lng: 77.209 },
-      { name: "Mumbai", lat: 19.076, lng: 72.8777 },
-      { name: "Bengaluru", lat: 12.9716, lng: 77.5946 },
-    ];
-
-    stations.forEach((s) => {
-      const marker = new window.google.maps.Marker({
-        position: { lat: s.lat, lng: s.lng },
-        map,
-      });
-
-      marker.addListener("click", () => {
-        onSelect?.(s);
-      });
-    });
-  }, []);
-
-  return (
-    <div className="w-full h-full rounded-2xl overflow-hidden border border-white/10">
-      <div ref={mapRef} className="w-full h-full" />
+        {stations.map((s) => (
+          <CircleMarker
+            key={s.id}
+            center={[s.lat, s.lng]}
+            radius={9}
+            pathOptions={{
+              color:
+                s.demand === "High"
+                  ? "#f43f5e"
+                  : s.demand === "Medium"
+                  ? "#a855f7"
+                  : "#22c55e",
+              fillColor:
+                s.demand === "High"
+                  ? "#f43f5e"
+                  : s.demand === "Medium"
+                  ? "#a855f7"
+                  : "#22c55e",
+              fillOpacity: 0.9,
+            }}
+            eventHandlers={{
+              click: () => onSelect(s),
+            }}
+          />
+        ))}
+      </MapContainer>
     </div>
   );
 }

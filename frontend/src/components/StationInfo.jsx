@@ -1,4 +1,8 @@
 export default function StationInfo({ station }) {
+  const utilization = Math.round(
+    ((station.capacity - station.available) / station.capacity) * 100
+  );
+
   if (!station) {
     return (
       <div className="border border-dashed border-white/20 rounded-2xl
@@ -9,14 +13,51 @@ export default function StationInfo({ station }) {
   }
 
   return (
-    <div className="p-6 rounded-2xl bg-black/30 border border-white/10">
-      <h3 className="text-xl font-semibold">{station.name}</h3>
-      <p className="mt-2 text-gray-400">Demand Level: 
-        <span className="ml-2 capitalize text-cyan-400">{station.demand}</span>
-      </p>
-      <p className="mt-1 text-gray-400">
-        Available Bikes: <span className="text-green-400">{station.bikes}</span>
-      </p>
+    <div className="rounded-2xl bg-[#0b1220]/90 border border-white/10 p-6 space-y-5">
+      
+      {/* Header */}
+      <div className="flex justify-between items-start">
+        <div>
+          <h2 className="text-2xl font-bold">
+            {station.name},
+            <br />
+            {station.city}
+          </h2>
+          <span className="inline-block mt-2 px-3 py-1 rounded-full text-sm bg-purple-500/20 text-purple-300">
+            {station.demand}
+          </span>
+        </div>
+        <span className="text-cyan-400 text-xl">📍</span>
+      </div>
+
+      {/* Available Bikes */}
+      <div className="rounded-xl bg-cyan-500/10 p-4 flex justify-between">
+        <span>🚲 Available Bikes</span>
+        <span className="text-cyan-400 text-xl font-bold">
+          {station.available}
+        </span>
+      </div>
+
+      {/* Capacity */}
+      <div className="rounded-xl bg-purple-500/10 p-4 flex justify-between">
+        <span>👥 Total Capacity</span>
+        <span className="text-purple-400 text-xl font-bold">
+          {station.capacity}
+        </span>
+      </div>
+
+      {/* Utilization */}
+      <div className="rounded-xl bg-pink-500/10 p-4 flex justify-between">
+        <span>📈 Utilization</span>
+        <span className="text-pink-400 text-xl font-bold">
+          {utilization}%
+        </span>
+      </div>
+
+      {/* Coordinates */}
+      <div className="rounded-xl bg-white/5 p-3 text-sm text-gray-400">
+        Coordinates: {station.lat}, {station.lng}
+      </div>
     </div>
   );
 }
