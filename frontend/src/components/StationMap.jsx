@@ -14,7 +14,7 @@ L.Icon.Default.mergeOptions({
     "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-export default function StationMap({ onSelect }) {
+export default function StationMap({ onSelectStation }) {
   
 return (
     <div className="w-full h-full rounded-2xl overflow-hidden">
@@ -52,7 +52,7 @@ return (
               fillOpacity: 0.9,
             }}
             eventHandlers={{
-              click: () => onSelect(s),
+              click: () => onSelectStation(s),
             }}
           />
         ))}

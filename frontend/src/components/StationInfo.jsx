@@ -13,7 +13,7 @@ export default function StationInfo({ station }) {
   }
 
   return (
-    <div className="rounded-2xl bg-[#0b1220]/90 border border-white/10 p-6 space-y-5">
+    <div className="rounded-2xl bg-[#0b1220]/90 border border-white/10 p-8 space-y-5">
       
       {/* Header */}
       <div className="flex justify-between items-start">

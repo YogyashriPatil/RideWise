@@ -19,7 +19,7 @@ export default function MapPage() {
           <SideNavbar />
         </div>
 
-         <div className="flex-1 h-full overflow-y-auto px-10 pt-28 space-y-8">
+         <div className="flex-1 h-full overflow-y-auto px-6 pt-24 space-y-6">
           <div className="text-center">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
               Real-Time Station Tracking
@@ -39,15 +39,15 @@ export default function MapPage() {
           </div>
 
           {/* MAP + RIGHT PANEL */}
-          <div className="grid grid-cols-12 gap-8">
+          <div className="grid grid-cols-12 gap-4">
 
             {/* MAP */}
-            <div className="col-span-12 lg:col-span-8 h-[420px] rounded-2xl overflow-hidden bg-[#0b1220]/80 border border-white/10 shadow-lg">
+            <div className="col-span-12 lg:col-span-7 h-[460px] w-[469px] rounded-2xl overflow-hidden bg-[#0b1220]/80 border border-white/10 shadow-lg">
               <StationMap onSelectStation={setSelectedStation} />
             </div>
 
             {/* RIGHT SIDE */}
-            <div className="col-span-12 lg:col-span-4 space-y-6">
+            <div className="col-span-12 lg:col-span-5 space-y-5">
               {selectedStation ? (
                 <StationInfo station={selectedStation} />
               ) : (
