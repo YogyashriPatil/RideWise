@@ -45,5 +45,14 @@ router.post("/day", (req, res) => {
     // console.log("📤 Sending prediction:", response);
     // res.json(response);
 });
+router.post("/hourly", (req, res) => {
+  exec(
+    `python ml/predict.py '${JSON.stringify(req.body)}'`,
+    (err, stdout) => {
+      if (err) return res.status(500).send("Prediction error");
+      res.json(JSON.parse(stdout));
+    }
+  );
+});
 
 export default router;
