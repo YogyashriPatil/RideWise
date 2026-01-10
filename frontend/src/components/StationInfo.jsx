@@ -5,7 +5,7 @@ export default function StationInfo({ station }) {
 
   if (!station) {
     return (
-      <div className="border border-dashed border-white/20 rounded-2xl
+      <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl 
         flex items-center justify-center text-gray-400 h-64">
         Select a Station
       </div>
@@ -13,15 +13,21 @@ export default function StationInfo({ station }) {
   }
 
   return (
-    <div className="rounded-2xl bg-[#0b1220]/90 border border-white/10 p-8 space-y-5">
-      
+    <div className="relative p-6 space-y-6
+      bg-white/10 backdrop-blur-xl border rounded-2xl 
+       text-gray-400 ">
+      <div className="absolute inset-0 rounded-2xl 
+        bg-gradient-to-r from-cyan-500/20 to-purple-500/20 
+        blur-xl -z-10" />
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-2xl font-bold leading-tight">
             {station.name},
             <br />
-            {station.city}
+            <span className="block text-sm text-gray-400 mt-1">
+              {station.city}
+            </span>
           </h2>
           <span className="inline-block mt-2 px-3 py-1 rounded-full text-sm bg-purple-500/20 text-purple-300">
             {station.demand}
@@ -31,7 +37,7 @@ export default function StationInfo({ station }) {
       </div>
 
       {/* Available Bikes */}
-      <div className="rounded-xl bg-cyan-500/10 p-4 flex justify-between">
+      <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 flex justify-between">
         <span>🚲 Available Bikes</span>
         <span className="text-cyan-400 text-xl font-bold">
           {station.available}
