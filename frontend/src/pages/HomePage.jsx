@@ -36,10 +36,7 @@ export default function Home() {
             </p>
 
             <div className="mt-10 flex gap-4">
-              <button className="px-8 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 transition" onClick={() => navigate("/predict")}>
-                Start Predicting →
-              </button>
-
+              
               <button className="px-8 py-3 rounded-xl border border-white/20 hover:bg-white/5 transition" onClick={() => navigate("/map")}>
                 📍 View Station Map
               </button>

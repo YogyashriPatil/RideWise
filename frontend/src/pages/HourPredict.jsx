@@ -1,79 +1,26 @@
 import { useState } from "react";
-import Navbar from "../components/Navbar";
-import InputPanel from "../components/InputPanel";
-import ReadyToPredict from "../components/ReadyToPredict";
-import {
-  AIInsights,
-  ForecastChart,
-  SeasonalChart,
-  WeatherImpact
-} from "../components/AIInsights";
-import SideNavbar from "../components/Sidebar";
-import SummaryCards from "../components/SummaryCards";
-import RideWiseBackground from "../background/NewBackground";
+import HourInputPanel from "../components/HourInputPanel";
+import PredictionResult from "../components/PredictionResult";
 
-export default function HourPredict() {
-  const [predicted, setPredicted] = useState(false);
+export default function HourPrediction1() {
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handlePredict = () => {
-    // simulate Hour-based ML API delay
-    setTimeout(() => {
-      setPredicted(true);
-    }, 800);
+  const handlePredict = async (data) => {
+    setLoading(true);
+    const res = await predictHourly(data);
+    console.log("API RESULT:", res);
+    setResult(res);
+    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen text-white">
-      <RideWiseBackground>
-        <Navbar />
+    <div className="page">
+      <HourInputPanel onPredict={handlePredict} />
 
-        <div className="flex">
-          <SideNavbar />
+      {loading && <p className="loading">Predicting…</p>}
 
-          <main className="flex-1 pt-28 px-10">
-            <h1 className="text-4xl font-bold mb-2">
-              Hour-wise AI Prediction
-            </h1>
-
-            <p className="text-gray-400 mb-6">
-              Predict bike rental demand based on specific hours using AI models
-            </p>
-
-            {/* BEFORE PREDICT */}
-            {!predicted && (
-              <div className="flex gap-8">
-                <InputPanel
-                  mode="hour"        // optional prop for future logic
-                  onPredict={handlePredict}
-                />
-                <ReadyToPredict />
-              </div>
-            )}
-
-            {/* AFTER PREDICT */}
-            {predicted && (
-              <>
-                <SummaryCards />
-
-                <div className="grid grid-cols-2 gap-8 mt-8">
-                  <InputPanel
-                    mode="hour"
-                    onPredict={handlePredict}
-                  />
-                  <ForecastChart />
-                </div>
-
-                <div className="grid grid-cols-2 gap-8 mt-8">
-                  <WeatherImpact />
-                  <SeasonalChart />
-                </div>
-
-                <AIInsights />
-              </>
-            )}
-          </main>
-        </div>
-      </RideWiseBackground>
+      <PredictionResult result={result} />
     </div>
   );
 }
