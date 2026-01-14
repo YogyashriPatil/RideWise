@@ -9,6 +9,7 @@ import Reservations from "./pages/Reservations";
 import Profile from "./pages/Profile";
 import DayPredict from "./pages/DayPredict";
 import HourPrediction from "./pages/HourlyPrediction";
+import GlobalAIChatbot from "./components/AIChatbot";
 function App() {
     return <BrowserRouter>
         <Routes>
@@ -25,6 +26,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
         
         </Routes>
+        <GlobalAIChatbot context={null} />
     </BrowserRouter>
 }
 
