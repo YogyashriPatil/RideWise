@@ -5,6 +5,14 @@ import math
 import joblib
 import pandas as pd
 from datetime import datetime
+import lightgbm as lgb
+
+class SilentLogger:
+    def info(self, *args, **kwargs):
+        pass
+    def warning(self, *args, **kwargs):
+        pass
+lgb.register_logger(SilentLogger)
 
 # =====================================================
 # ARGUMENT CHECK (Node.js → Python safe)
@@ -190,7 +198,7 @@ row = {
 # =====================================================
 # DATAFRAME (EXACT FEATURE ORDER)
 # =====================================================
-feature_order = model.feature_names_in_
+feature_order = model.feature_name_
 X = pd.DataFrame([[row[f] for f in feature_order]], columns=feature_order)
 
 # =====================================================
