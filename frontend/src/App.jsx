@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import DayPredict from "./pages/DayPredict";
 import HourPrediction from "./pages/HourlyPrediction";
 import GlobalAIChatbot from "./components/AIChatbot";
+import Review from "./pages/ReviewPage";
 function App() {
     return <BrowserRouter>
         <Routes>
@@ -24,7 +25,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/reserve" element={<Reservations />} />
             <Route path="/profile" element={<Profile />} />
-        
+            <Route path="/review" element={<Review />} />
+
         </Routes>
         <GlobalAIChatbot context={null} />
     </BrowserRouter>

@@ -1,4 +1,4 @@
-import { LayoutDashboard, Brain, Map, Calendar, Settings } from "lucide-react";
+import { LayoutDashboard, Brain, Map, Calendar, Settings, MessageSquare, Upload, Star } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export default function SideNavbar() {
@@ -19,6 +19,10 @@ export default function SideNavbar() {
       <SidebarItem to="/predict" icon={<Brain />} text="AI Insights" />
       <SidebarItem to="/map" icon={<Map />} text="Station Map" />
       <SidebarItem to="/reserve" icon={<Calendar />} text="Reservations" />
+      <SidebarItem to="/chatbot" icon={<MessageSquare />} text="ChatBot" />
+      <SidebarItem to="/upload-pdf" icon={<Upload />} text="Upload PDF" />
+      <SidebarItem to="/review" icon={<Star />} text="Review" />
+
       <SidebarItem to="/setting" icon={<Settings />} text="Settings" />
     </aside>
   );
