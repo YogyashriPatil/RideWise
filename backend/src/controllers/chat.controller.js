@@ -1,7 +1,8 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-
+import { configDotenv } from "dotenv";
+configDotenv();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
+// console.log(genAI)
 export const chatWithGemini = async (req, res) => {
   try {
     const { message, context } = req.body;
