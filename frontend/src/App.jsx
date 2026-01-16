@@ -12,6 +12,7 @@ import HourPrediction from "./pages/HourlyPrediction";
 import GlobalAIChatbot from "./components/AIChatbot";
 import Review from "./pages/ReviewPage";
 import ChatBot from "./pages/ChatBotPage";
+import UploadPDF from "./pages/UploadPDF";
 function App() {
     return <BrowserRouter>
         <Routes>
@@ -28,6 +29,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/review" element={<Review />} />
             <Route path="/chatbot" element={<ChatBot />} />
+            <Route path="/upload-pdf" element={<UploadPDF />} />
 
         </Routes>
         <GlobalAIChatbot context={null} />
