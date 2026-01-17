@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import RideWiseBackground from "../background/NewBackground";
 import Navbar from "../components/Navbar";
+import ForgotPasswordModal from "../components/ForgotPasswordModal";
 import UserLocationMap from "../components/UserLocationMap";
 import {useNavigate } from "react-router-dom";
 export default function Profile() {
@@ -9,6 +10,7 @@ export default function Profile() {
   const [form, setForm] = useState({ name: "", email: "" });
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -44,7 +46,7 @@ export default function Profile() {
       setLocation(null);
     }
   };
-  console.log("MAP COORDS:", location.latitude, location.longitude);
+  // console.log("MAP COORDS:", location.latitude, location.longitude);
 
   fetchLocation();
   }, []);
@@ -123,7 +125,7 @@ export default function Profile() {
                   {loading ? "Updating..." : "Update Profile"}
                 </button>
                 <button
-                  onClick={() => navigate("/change-password")}
+                  onClick={() => setOpen(true)}
                   className="
                     w-full py-2 rounded-xl mb-3
                     bg-white/10 hover:bg-white/20 transition
@@ -131,6 +133,10 @@ export default function Profile() {
                 >
                   Change Password
                 </button>
+                <ForgotPasswordModal
+                  isOpen={open}
+                  onClose={() => setOpen(false)}
+                />
                 {/* LOGOUT */}
                 <button
                   onClick={logout}
