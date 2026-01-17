@@ -121,14 +121,14 @@ export default function UploadPDF()
               onClick={() => navigate("/predict/hour")}
               className="px-6 py-3 rounded-xl bg-white/10 border border-white/10 hover:bg-white/20 transition"
             >
-              Hour Prediction →
+              ⏰ Hour Prediction →
             </button>
 
             <button
               onClick={() => navigate("/predict/day")}
               className="px-6 py-3 rounded-xl bg-white/10 border border-white/10 hover:bg-white/20 transition"
             >
-              Day Prediction →
+              📅 Day Prediction →
             </button>
           </div>
         )}
@@ -156,8 +156,8 @@ const Insight = ({ icon, title, value }) => (
       </div>
       <p className="font-medium">{title}</p>
     </div>
-    <p className="text-white/80 text-sm leading-relaxed">
-      {value}
+    <p className="text-white/80 text-md leading-relaxed">
+      {value || "Not available in Document"}
     </p>
   </div>
 );
