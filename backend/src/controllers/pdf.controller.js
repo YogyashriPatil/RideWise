@@ -34,17 +34,24 @@ export const analyzePDF = async (req, res) => {
     const pdfText = fullText.slice(0, 8000);
 
     const prompt = `
-You are an AI system analyzing a bike rental related document.
+    You are an AI system analyzing a bike rental related document.
 
-Extract or infer:
-1. Rental demand (low / medium / high)
-2. Weather condition
-3. Temperature
-4. Bike availability trend
+    Extract or infer:
+    1. Rental demand (low / medium / high)
+    2. Weather condition
+    3. Temperature
+    4. Bike availability trend
 
-If information is missing, say "Not available in document".
+    If information is missing, say "Not available in document".
 
-Return ONLY valid JSON.
+    Return ONLY valid JSON.The valid json Follows below syntax
+    {
+      "rentals": "here rental value",
+      "weather":"weather info",
+      "temperature":"temperature info",
+      "availability":"info"
+    }
+    the key of json contain as it is.
 `;
 
     const model = genAI.getGenerativeModel({
@@ -63,8 +70,9 @@ Return ONLY valid JSON.
     const insights = JSON.parse(cleanJSON);
 
     fs.unlinkSync(req.file.path); // cleanup
-
+    console.log(insights)
     res.json(insights);
+    
   } catch (error) {
     console.error("PDF analysis error:", error);
     res.status(500).json({ error: "PDF analysis failed" });

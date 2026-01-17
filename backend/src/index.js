@@ -9,6 +9,7 @@ import contactRoutes from "./routes/contact.routes.js";
 import userRoutes from "./routes/auth.routes.js";
 import predictionRoutes from "./routes/prediction.routes.js";
 import pdfRoutes from "./routes/pdf.routes.js";
+import locationRoutes from "./routes/location.routes.js";
 
 dotenv.config();
 connectDB();
@@ -30,6 +31,8 @@ app.use("/api/user", userRoutes)
 app.use("/api/contact", contactRoutes);
 app.use("/api", chatRoutes);
 app.use("/api", pdfRoutes);
+app.use("/api", locationRoutes);
+
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
