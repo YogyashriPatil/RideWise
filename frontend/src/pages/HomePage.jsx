@@ -16,7 +16,7 @@ export default function Home() {
         </div>
 
         {/* Content */}
-        <main className="pt-32 px-6 max-w-7xl mx-auto space-y-32">
+        <main className="pt-32 px-6 max-w-7xl mx-auto space-y-10">
 
           {/* ================= HERO ================= */}
           <section className="min-h-[60vh] flex flex-col items-center justify-center text-center">

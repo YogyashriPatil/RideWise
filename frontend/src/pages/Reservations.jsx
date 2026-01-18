@@ -1,28 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import ReservationCard from "../components/ReservationCard";
 import RideWiseBackground from "../background/NewBackground";
 import SideNavbar from "../components/Sidebar";
 import { stations as stationData } from "../data/stations";
-import { useEffect } from "react";
+import {
+  getMyReservations,
+  createReservation,
+} from "../api/reservationApi";
 
 export default function Reservations() {
+  /* -------------------- USER (TEMP) -------------------- */
+  // ⚠️ Replace with real userId from auth later
+  const userId = "PASTE_REAL_MONGODB_USER_ID_HERE";
+
   /* -------------------- STATION DATA -------------------- */
   const [stations, setStations] = useState(() => {
     const saved = localStorage.getItem("stations");
     return saved ? JSON.parse(saved) : stationData;
   });
+
   useEffect(() => {
     localStorage.setItem("stations", JSON.stringify(stations));
   }, [stations]);
 
+  /* -------------------- FORM -------------------- */
   const [form, setForm] = useState({
     stationId: "",
     date: "",
     time: "",
     duration: "1",
   });
-  const [reservations, setReservations] = useState([]);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -31,48 +40,77 @@ export default function Reservations() {
     (s) => s.id === Number(form.stationId)
   );
 
-  const handleReserve = () => {
-  if (!form.stationId || !form.date || !form.time) {
-    alert("Please fill all fields");
-    return;
-  }
+  /* -------------------- RESERVATIONS -------------------- */
+  const [reservations, setReservations] = useState([]);
 
-  if (selectedStation.available === 0) {
-    alert("No bikes available at this station 🚫");
-    return;
-  }
+  // 🔹 Load reservations from DB on page load
+  useEffect(() => {
+    if (!userId) return;
 
-  const newReservation = {
-    id: Date.now(),
-    stationId: selectedStation.id,
-    station: `${selectedStation.name}, ${selectedStation.city}`,
-    date: form.date.split("-").reverse().join("/"),
-    time: form.time,
-    duration: `${form.duration}h`,
-    bikeId: `BK-${Math.floor(100 + Math.random() * 900)}`,
-    status: "Active",
+    const loadReservations = async () => {
+      try {
+        const res = await getMyReservations(userId);
+        setReservations(res.data);
+      } catch (err) {
+        console.error("Failed to load reservations", err);
+      }
+    };
+
+    loadReservations();
+  }, [userId]);
+
+  /* -------------------- HANDLE RESERVE -------------------- */
+  const handleReserve = async () => {
+    if (!form.stationId || !form.date || !form.time) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    if (selectedStation.available === 0) {
+      alert("No bikes available at this station 🚫");
+      return;
+    }
+
+    const payload = {
+      userId,
+      stationName: `${selectedStation.name}, ${selectedStation.city}`,
+      date: form.date.split("-").reverse().join("/"),
+      time: form.time,
+      duration: `${form.duration}h`,
+      bikeId: `BK-${Math.floor(100 + Math.random() * 900)}`,
+    };
+
+    try {
+      // ✅ Save to DB
+      await createReservation(payload);
+
+      // ✅ Refresh from DB
+      const res = await getMyReservations(userId);
+      setReservations(res.data);
+
+      // UI-only bike decrement
+      setStations((prev) =>
+        prev.map((s) =>
+          s.id === selectedStation.id
+            ? { ...s, available: s.available - 1 }
+            : s
+        )
+      );
+
+      // Reset form
+      setForm({
+        stationId: "",
+        date: "",
+        time: "",
+        duration: "1",
+      });
+    } catch (err) {
+      console.error("Reservation failed", err);
+      alert("Reservation failed");
+    }
   };
 
-  setReservations((prev) => [newReservation, ...prev]);
-
-  // 🔻 Decrease available bikes
-  setStations((prev) =>
-    prev.map((s) =>
-      s.id === selectedStation.id
-        ? { ...s, available: s.available - 1 }
-        : s
-    )
-  );
-
-  setForm({
-    stationId: "",
-    date: "",
-    time: "",
-    duration: "1",
-  });
-};
-
-
+  /* -------------------- UI -------------------- */
   return (
     <div className="min-h-screen text-white relative overflow-hidden">
       <RideWiseBackground>
@@ -80,7 +118,6 @@ export default function Reservations() {
           <Navbar />
         </div>
 
-        {/* INTERNAL CSS */}
         <style>{`
           .input {
             width: 100%;
@@ -109,14 +146,15 @@ export default function Reservations() {
               <option value="">Select station</option>
               {stations.map((s) => (
                 <option key={s.id} value={s.id}>
-                  {s.name} {s.city}({s.available} bikes)
+                  {s.name} {s.city} ({s.available} bikes)
                 </option>
               ))}
             </select>
 
             {selectedStation && (
               <p className="text-xs mt-2 text-cyan-400">
-                Available bikes: {selectedStation.available} / {selectedStation.capacity}
+                Available bikes: {selectedStation.available} /{" "}
+                {selectedStation.capacity}
                 <br />
                 Demand: {selectedStation.demand}
               </p>
@@ -175,7 +213,7 @@ export default function Reservations() {
             ) : (
               <div className="space-y-4">
                 {reservations.map((r) => (
-                  <ReservationCard key={r.id} data={r} />
+                  <ReservationCard key={r._id} data={r} />
                 ))}
               </div>
             )}

@@ -16,7 +16,7 @@ export default function SideNavbar() {
       <p className="text-gray-500 text-xs mb-4 tracking-widest">NAVIGATION</p>
 
       <SidebarItem to="/home" icon={<LayoutDashboard />} text="Dashboard" />
-      <SidebarItem to="/predict" icon={<Brain />} text="AI Insights" />
+      <SidebarItem to="/predict/hour" icon={<Brain />} text="AI Insights" />
       <SidebarItem to="/map" icon={<Map />} text="Station Map" />
       <SidebarItem to="/reserve" icon={<Calendar />} text="Reservations" />
       <SidebarItem to="/chatbot" icon={<MessageSquare />} text="ChatBot" />
