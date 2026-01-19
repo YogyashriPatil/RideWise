@@ -1,4 +1,5 @@
 import Reservation from "../models/Reservation.js";
+import mongoose from "mongoose";
 
 /* ================= CREATE RESERVATION ================= */
 export const createReservation = async (req, res) => {
@@ -13,12 +14,31 @@ export const createReservation = async (req, res) => {
 };
 
 /* ================= GET USER RESERVATIONS ================= */
+
 export const getMyReservations = async (req, res) => {
   try {
-    const reservations = await Reservation.find();
-    res.json(reservations);
+    const { userId } = req.params;
+
+    console.log("Fetching reservations for userId:", userId);
+
+    // 🛑 Validate ObjectId FIRST
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({
+        message: "Invalid userId format",
+      });
+    }
+
+    // ✅ Correct MongoDB query
+    const reservations = await Reservation.find({
+      userId: new mongoose.Types.ObjectId(userId),
+    }).sort({ createdAt: -1 });
+
+    return res.status(200).json(reservations);
   } catch (error) {
-    res.status(500).json({ message: "Failed to fetch reservations" });
+    console.error("Failed to fetch reservations:", error);
+    return res.status(500).json({
+      message: "Failed to fetch reservations",
+    });
   }
 };
 
