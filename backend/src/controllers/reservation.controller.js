@@ -3,9 +3,11 @@ import Reservation from "../models/Reservation.js";
 /* ================= CREATE RESERVATION ================= */
 export const createReservation = async (req, res) => {
   try {
+    console.log("CREATE payload:", req.body);
     const reservation = await Reservation.create(req.body);
     res.status(201).json(reservation);
   } catch (error) {
+    console.error("CREATE error:", error);
     res.status(500).json({ message: "Reservation failed" });
   }
 };
