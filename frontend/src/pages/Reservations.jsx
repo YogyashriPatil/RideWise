@@ -12,7 +12,13 @@ import {
 export default function Reservations() {
   /* -------------------- USER (TEMP) -------------------- */
   // ⚠️ Replace with real userId from auth later
-  const userId = "PASTE_REAL_MONGODB_USER_ID_HERE";
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.id;
+
+  if (!userId) {
+    console.warn("User not logged in");
+    return;
+  }
 
   /* -------------------- STATION DATA -------------------- */
   const [stations, setStations] = useState(() => {

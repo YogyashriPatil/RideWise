@@ -80,6 +80,7 @@ export const AuthPage = () => {
             }
                 // save user session
             localStorage.setItem("user", JSON.stringify(data));
+            
             navigate("/home");
         }
     }
